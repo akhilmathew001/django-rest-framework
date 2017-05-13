@@ -4,10 +4,13 @@ from customer.models import Customer
 from customer.serializers import CustomerSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import permissions
 
 # Create your views here.
 
 class CustomerList(APIView):
+    
+    permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request, format=None):
         customers = Customer.objects.all()
@@ -24,6 +27,8 @@ class CustomerList(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class CustomerDetail(APIView):
+    
+    permission_classes = (permissions.IsAuthenticated,)
     
     def get_object(self, pk): 
         try:
